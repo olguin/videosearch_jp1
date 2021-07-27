@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_indexerlogicapp5ee5u_name": {
+            "value": "indexerlogicapp5ee5u"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_$connections": {
+            "value": {
+                "azureblob": {
+                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/azureblob",
+                    "connectionName": "azureblob",
+                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                },
+                "videoindexer-v2_1": {
+                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/videoindexer-v2",
+                    "connectionName": "videoindexer-v2",
+                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/videoindexer-v2"
+                }
+            }
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_AccountID": {
+            "value": "7def2bf0-0f29-4ffe-a08e-a3465debd1ca"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_Location": {
+            "value": "eastus"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_augmentationUrl": {
+            "value": "ENTER AUGMENTATION TRIGGER URL HERE"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_parserUrl": {
+            "value": "https://parserapi5ee5u.azurewebsites.net/api/parse"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_viLocation": {
+            "value": "eastus"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_webappkey": {
+            "value": "parserapi_key111"
+        }
+    }
+}

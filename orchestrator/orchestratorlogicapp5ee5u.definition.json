@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_orchestratorlogicapp5ee5u_name": {
+            "defaultValue": "orchestratorlogicapp5ee5u",
+            "type": "string"
+        },
+        "workflows_orchestratorlogicapp5ee5u_parameters_$connections": {
+            "defaultValue": {
+                "azureblob": {
+                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/azureblob",
+                    "connectionName": "azureblob",
+                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                }
+            },
+            "type": "Object"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-07-01",
+            "dependsOn": [],
+            "location": "eastus",
+            "name": "[parameters('workflows_orchestratorlogicapp5ee5u_name')]",
+            "properties": {
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {
+                                "azureblob": {
+                                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/azureblob",
+                                    "connectionName": "azureblob",
+                                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                                }
+                            },
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_a_blob_is_added_or_modified_(properties_only)": {
+                            "recurrence": {
+                                "frequency": "Minute",
+                                "interval": 5
+                            },
+                            "splitOn": "@triggerBody()",
+                            "metadata": {
+                                "JTJmbWVkaWE=": "/media"
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/datasets/default/triggers/batch/onupdatedfile",
+                                "queries": {
+                                    "checkBothCreatedAndModifiedDateTime": false,
+                                    "folderId": "JTJmbWVkaWE=",
+                                    "maxFileCount": 10
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Create_SAS_URI_by_path": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "Permissions": "Read"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/datasets/default/CreateSharedLinkByPath",
+                                "queries": {
+                                    "path": "@triggerBody()?['Path']"
+                                }
+                            }
+                        },
+                        "Run_the_Indexer_flow": {
+                            "runAfter": {
+                                "Create_SAS_URI_by_path": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "blobinfo": {
+                                        "batchid": "",
+                                        "canonicaluri": "@{body('Create_SAS_URI_by_path')?['WebUrl']}",
+                                        "correlationid": "345",
+                                        "fileName": "@{triggerBody()?['Name']}",
+                                        "fileType": "video/mp4",
+                                        "sasExpiry": "never",
+                                        "sasUri": "@{body('Create_SAS_URI_by_path')?['WebUrl']}",
+                                        "systemVersion": "2"
+                                    }
+                                },
+                                "method": "POST",
+                                "uri": "https://prod-11.eastus.logic.azure.com:443/workflows/f70cf156a0384f649737657f61462cb2/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mpFovoMTXcZci0W065l00KeAkYPqrCtdB7x9e6m1mcg"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": "[parameters('workflows_orchestratorlogicapp5ee5u_parameters_$connections')]"
+                    }
+                },
+                "state": "Enabled"
+            },
+            "scale": null,
+            "tags": {},
+            "type": "Microsoft.Logic/workflows"
+        }
+    ],
+    "variables": {}
+}

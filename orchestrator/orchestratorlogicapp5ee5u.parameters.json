@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_orchestratorlogicapp5ee5u_name": {
+            "value": "orchestratorlogicapp5ee5u"
+        },
+        "workflows_orchestratorlogicapp5ee5u_parameters_$connections": {
+            "value": {
+                "azureblob": {
+                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/azureblob",
+                    "connectionName": "azureblob",
+                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                }
+            }
+        }
+    }
+}

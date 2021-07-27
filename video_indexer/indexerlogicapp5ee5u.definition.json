@@ -1,0 +1,768 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_indexerlogicapp5ee5u_name": {
+            "defaultValue": "indexerlogicapp5ee5u",
+            "type": "string"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_$connections": {
+            "defaultValue": {
+                "azureblob": {
+                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/azureblob",
+                    "connectionName": "azureblob",
+                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                },
+                "videoindexer-v2_1": {
+                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/videoindexer-v2",
+                    "connectionName": "videoindexer-v2",
+                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/videoindexer-v2"
+                }
+            },
+            "type": "Object"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_AccountID": {
+            "defaultValue": "7def2bf0-0f29-4ffe-a08e-a3465debd1ca",
+            "type": "String"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_Location": {
+            "defaultValue": "eastus",
+            "type": "String"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_augmentationUrl": {
+            "defaultValue": "ENTER AUGMENTATION TRIGGER URL HERE",
+            "type": "String"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_parserUrl": {
+            "defaultValue": "https://parserapi5ee5u.azurewebsites.net/api/parse",
+            "type": "String"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_viLocation": {
+            "defaultValue": "eastus",
+            "type": "String"
+        },
+        "workflows_indexerlogicapp5ee5u_parameters_webappkey": {
+            "defaultValue": "parserapi_key111",
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-07-01",
+            "dependsOn": [],
+            "location": "eastus",
+            "name": "[parameters('workflows_indexerlogicapp5ee5u_name')]",
+            "properties": {
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {
+                                "azureblob": {
+                                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/azureblob",
+                                    "connectionName": "azureblob",
+                                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/azureblob"
+                                },
+                                "videoindexer-v2_1": {
+                                    "connectionId": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/resourceGroups/dt_videosearch_jp1/providers/Microsoft.Web/connections/videoindexer-v2",
+                                    "connectionName": "videoindexer-v2",
+                                    "id": "/subscriptions/7122c75c-2257-4879-98be-828df1acab53/providers/Microsoft.Web/locations/eastus/managedApis/videoindexer-v2"
+                                }
+                            },
+                            "type": "Object"
+                        },
+                        "AccountID": {
+                            "defaultValue": "7def2bf0-0f29-4ffe-a08e-a3465debd1ca",
+                            "type": "String"
+                        },
+                        "Location": {
+                            "defaultValue": "eastus",
+                            "type": "String"
+                        },
+                        "augmentationUrl": {
+                            "defaultValue": "ENTER AUGMENTATION TRIGGER URL HERE",
+                            "type": "String"
+                        },
+                        "parserUrl": {
+                            "defaultValue": "https://parserapi5ee5u.azurewebsites.net/api/parse",
+                            "type": "String"
+                        },
+                        "viLocation": {
+                            "defaultValue": "eastus",
+                            "type": "String"
+                        },
+                        "webappkey": {
+                            "defaultValue": "parserapi_key111",
+                            "type": "String"
+                        }
+                    },
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {
+                                "schema": {
+                                    "properties": {
+                                        "blobinfo": {
+                                            "properties": {
+                                                "batchid": {
+                                                    "type": "string"
+                                                },
+                                                "canonicaluri": {
+                                                    "type": "string"
+                                                },
+                                                "correlationid": {
+                                                    "type": "string"
+                                                },
+                                                "fileName": {
+                                                    "type": "string"
+                                                },
+                                                "fileType": {
+                                                    "type": "string"
+                                                },
+                                                "sasExpiry": {
+                                                    "type": "string"
+                                                },
+                                                "sasUri": {
+                                                    "type": "string"
+                                                },
+                                                "systemVersion": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "enrichedLoadData": {
+                                            "type": "string"
+                                        },
+                                        "loadData": {
+                                            "type": "string"
+                                        },
+                                        "workspaceId": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "operationOptions": "EnableSchemaValidation"
+                        }
+                    },
+                    "actions": {
+                        "Call_Parser_to_convert_VI_insights_JSON_into_ACS_searchable_documents": {
+                            "runAfter": {
+                                "Condition": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Http",
+                            "inputs": {
+                                "body": {
+                                    "values": [
+                                        {
+                                            "data": "@json(variables('viInsightsJSON'))",
+                                            "recordId": "0"
+                                        }
+                                    ]
+                                },
+                                "headers": {
+                                    "Accept": "application/json",
+                                    "Content-Type": "application/json",
+                                    "Ocp-Apim-Subscription-Key": "@parameters('webappkey')"
+                                },
+                                "method": "POST",
+                                "uri": "@parameters('parserUrl')"
+                            }
+                        },
+                        "Condition": {
+                            "actions": {
+                                "Create_blob": {
+                                    "runAfter": {
+                                        "SuccessResponse": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": "{\"sasUri\": \"@{triggerBody()?['blobinfo']?['sasUri']}\", \"insights\": @{variables('viInsightsJSON')}}",
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/datasets/default/files",
+                                        "queries": {
+                                            "folderPath": "videoindexerinsights",
+                                            "name": "@{variables('videoName')}_insights.json",
+                                            "queryParametersSingleEncoded": true
+                                        }
+                                    },
+                                    "runtimeConfiguration": {
+                                        "contentTransfer": {
+                                            "transferMode": "Chunked"
+                                        }
+                                    }
+                                },
+                                "SuccessResponse": {
+                                    "runAfter": {},
+                                    "type": "Response",
+                                    "kind": "Http",
+                                    "inputs": {
+                                        "statusCode": 200
+                                    },
+                                    "operationOptions": "Asynchronous"
+                                }
+                            },
+                            "runAfter": {
+                                "Wait_until_video_is_processed": [
+                                    "Succeeded",
+                                    "Failed",
+                                    "TimedOut"
+                                ]
+                            },
+                            "else": {
+                                "actions": {
+                                    "ErrorResponse": {
+                                        "runAfter": {},
+                                        "type": "Response",
+                                        "kind": "Http",
+                                        "inputs": {
+                                            "body": {
+                                                "message": "Error: Failed to process video"
+                                            },
+                                            "schema": {
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "statusCode": 500
+                                        },
+                                        "operationOptions": "Asynchronous"
+                                    },
+                                    "Terminate": {
+                                        "runAfter": {
+                                            "ErrorResponse": [
+                                                "Succeeded"
+                                            ]
+                                        },
+                                        "type": "Terminate",
+                                        "inputs": {
+                                            "runError": {
+                                                "code": "500",
+                                                "message": "Failed to process video"
+                                            },
+                                            "runStatus": "Failed"
+                                        }
+                                    }
+                                }
+                            },
+                            "expression": {
+                                "and": [
+                                    {
+                                        "equals": [
+                                            "@variables('viResult')",
+                                            "Processed"
+                                        ]
+                                    }
+                                ]
+                            },
+                            "type": "If"
+                        },
+                        "For_each_value": {
+                            "foreach": "@body('Parse_JSON')?['values']",
+                            "actions": {
+                                "For_each_scene": {
+                                    "foreach": "@items('For_each_value')?['data']?['scenes']",
+                                    "actions": {
+                                        "Do_we_have_a_keyFrame_Object": {
+                                            "actions": {
+                                                "Call_the_Classifier_Child_Workflow": {
+                                                    "runAfter": {},
+                                                    "type": "Http",
+                                                    "inputs": {
+                                                        "body": "@items('For_each_scene')",
+                                                        "headers": {
+                                                            "Content-Type": "application/json"
+                                                        },
+                                                        "method": "POST",
+                                                        "uri": "https://prod-08.eastus.logic.azure.com:443/workflows/f3d573af675e487c91ed486f4ae53202/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ALRGIrbWuNL526FlC2bmNzx-8-Ot45lGdvuF3SkrTpI"
+                                                    }
+                                                },
+                                                "Save_the_enriched_Scene_Structure_to_blob": {
+                                                    "runAfter": {
+                                                        "Call_the_Classifier_Child_Workflow": [
+                                                            "Succeeded"
+                                                        ]
+                                                    },
+                                                    "type": "ApiConnection",
+                                                    "inputs": {
+                                                        "body": "@body('Call_the_Classifier_Child_Workflow')",
+                                                        "host": {
+                                                            "connection": {
+                                                                "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                                            }
+                                                        },
+                                                        "method": "post",
+                                                        "path": "/datasets/default/files",
+                                                        "queries": {
+                                                            "folderPath": "/scenes",
+                                                            "name": "@{variables('counter')}_@{variables('transformed_videoName')}",
+                                                            "queryParametersSingleEncoded": true
+                                                        }
+                                                    },
+                                                    "runtimeConfiguration": {
+                                                        "contentTransfer": {
+                                                            "transferMode": "Chunked"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "runAfter": {
+                                                "Set_variable_keyFrames": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "expression": {
+                                                "and": [
+                                                    {
+                                                        "not": {
+                                                            "equals": [
+                                                                "@empty(variables('keyframes'))",
+                                                                true
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            "type": "If"
+                                        },
+                                        "Increment_variable": {
+                                            "runAfter": {
+                                                "Do_we_have_a_keyFrame_Object": [
+                                                    "Succeeded"
+                                                ]
+                                            },
+                                            "type": "IncrementVariable",
+                                            "inputs": {
+                                                "name": "counter",
+                                                "value": 1
+                                            }
+                                        },
+                                        "Set_variable_keyFrames": {
+                                            "runAfter": {},
+                                            "type": "SetVariable",
+                                            "inputs": {
+                                                "name": "keyframes",
+                                                "value": "@items('For_each_scene')?['keyFrames']"
+                                            }
+                                        }
+                                    },
+                                    "runAfter": {},
+                                    "type": "Foreach"
+                                }
+                            },
+                            "runAfter": {
+                                "Parse_JSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "Get_Account_Access_Token": {
+                            "runAfter": {
+                                "Initialize_counter": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['videoindexer-v2_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/auth/@{encodeURIComponent(parameters('viLocation'))}/Accounts/@{encodeURIComponent(parameters('AccountID'))}/AccessToken",
+                                "queries": {
+                                    "allowEdit": true
+                                }
+                            },
+                            "description": "Get Video Indexer account access token."
+                        },
+                        "Initialize_canonicalUri": {
+                            "runAfter": {
+                                "Initialize_viProcessingStates": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "uri",
+                                        "type": "string",
+                                        "value": "@triggerBody()?['blobinfo']?['canonicaluri']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_counter": {
+                            "runAfter": {
+                                "Initialize_keyFrame_object": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "counter",
+                                        "type": "integer",
+                                        "value": 0
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_keyFrame_object": {
+                            "runAfter": {
+                                "Initialize_transformed_videoName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "keyframes",
+                                        "type": "array"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_sasAndInsights": {
+                            "runAfter": {
+                                "Initialize_viInsightsJSON": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "sasAndInsights",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_transformed_videoName": {
+                            "runAfter": {
+                                "Initiialize_videoName": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "transformed_videoName",
+                                        "type": "string",
+                                        "value": "@{variables('videoName')}_insights.json"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_viInsightsJSON": {
+                            "runAfter": {
+                                "Initialize_canonicalUri": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "viInsightsJSON",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_viProcessingStates": {
+                            "runAfter": {
+                                "Initialize_viResult": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "viProcesingStates",
+                                        "type": "array",
+                                        "value": [
+                                            "uploaded",
+                                            "processing"
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "Initialize_viResult": {
+                            "runAfter": {},
+                            "trackedProperties": {
+                                "correlationId": "@{triggerBody()?['correlationId']}",
+                                "fileName": "@{triggerBody()?['fileName']}",
+                                "systemVersion": "@{triggerBody()?['systemVersion']}"
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "viResult",
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "description": "Initialize the variable viResult, which stored the state of the video indexer job."
+                        },
+                        "Initiialize_videoName": {
+                            "runAfter": {
+                                "Initialize_sasAndInsights": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "videoName",
+                                        "type": "string",
+                                        "value": "@triggerBody()?['blobinfo']?['fileName']"
+                                    }
+                                ]
+                            }
+                        },
+                        "Parse_JSON": {
+                            "runAfter": {
+                                "Call_Parser_to_convert_VI_insights_JSON_into_ACS_searchable_documents": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ParseJson",
+                            "inputs": {
+                                "content": "@body('Call_Parser_to_convert_VI_insights_JSON_into_ACS_searchable_documents')",
+                                "schema": {
+                                    "properties": {
+                                        "values": {
+                                            "items": {
+                                                "properties": {
+                                                    "data": {
+                                                        "properties": {
+                                                            "scenes": {
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "name": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "id",
+                                                                        "name"
+                                                                    ],
+                                                                    "type": "object"
+                                                                },
+                                                                "type": "array"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "errors": {
+                                                        "type": "string"
+                                                    },
+                                                    "recordId": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "recordId",
+                                                    "errors",
+                                                    "data"
+                                                ],
+                                                "type": "object"
+                                            },
+                                            "type": "array"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "Upload_video_and_index": {
+                            "runAfter": {
+                                "Get_Account_Access_Token": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['videoindexer-v2_1']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/@{encodeURIComponent(parameters('viLocation'))}/Accounts/@{encodeURIComponent(parameters('AccountID'))}/Videos",
+                                "queries": {
+                                    "accessToken": "@body('Get_Account_Access_Token')",
+                                    "language": "Auto",
+                                    "name": "@variables('videoName')",
+                                    "videoUrl": "@variables('uri')"
+                                }
+                            },
+                            "description": "Upload the video to Video Indexer and initiate the job."
+                        },
+                        "Wait_until_video_is_processed": {
+                            "actions": {
+                                "Delay_by_iteration_*_30_seconds": {
+                                    "runAfter": {},
+                                    "type": "Wait",
+                                    "inputs": {
+                                        "interval": {
+                                            "count": "@mul(add(iterationIndexes('Wait_until_video_is_processed'), 1), 30)",
+                                            "unit": "Second"
+                                        }
+                                    },
+                                    "description": "Delay by 3 minutes."
+                                },
+                                "Get_Video_Index": {
+                                    "runAfter": {
+                                        "Delay_by_iteration_*_30_seconds": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['videoindexer-v2_1']['connectionId']"
+                                            }
+                                        },
+                                        "method": "get",
+                                        "path": "/@{encodeURIComponent(parameters('viLocation'))}/Accounts/@{encodeURIComponent(parameters('AccountID'))}/Videos/@{encodeURIComponent(body('Upload_video_and_index')?['id'])}/Index",
+                                        "queries": {
+                                            "accessToken": "@body('Get_Account_Access_Token')",
+                                            "language": "English"
+                                        }
+                                    },
+                                    "description": "Attempt to get the video indexer result for the uploaded video"
+                                },
+                                "Set_viInsightsJSON": {
+                                    "runAfter": {
+                                        "Set_videoName": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "viInsightsJSON",
+                                        "value": "@{body('Get_Video_Index')}"
+                                    }
+                                },
+                                "Set_viResult": {
+                                    "runAfter": {
+                                        "Set_viInsightsJSON": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "viResult",
+                                        "value": "@{body('Get_Video_Index')?['state']}"
+                                    },
+                                    "description": "Set the viResult variable to the value of the video indexer job state."
+                                },
+                                "Set_viResult_On_Failure": {
+                                    "runAfter": {
+                                        "Get_Video_Index": [
+                                            "Failed"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "viResult",
+                                        "value": "Error"
+                                    }
+                                },
+                                "Set_videoName": {
+                                    "runAfter": {
+                                        "Get_Video_Index": [
+                                            "Succeeded"
+                                        ]
+                                    },
+                                    "type": "SetVariable",
+                                    "inputs": {
+                                        "name": "videoName",
+                                        "value": "@body('Get_Video_Index')?['fileName']"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Upload_video_and_index": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "expression": "@not(contains(variables('viProcesingStates'), toLower(variables('viResult'))))",
+                            "limit": {
+                                "count": 120,
+                                "timeout": "PT1H"
+                            },
+                            "type": "Until",
+                            "description": "Check periodically whether the Video Indexer job has finished."
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_$connections')]"
+                    },
+                    "AccountID": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_AccountID')]"
+                    },
+                    "Location": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_Location')]"
+                    },
+                    "augmentationUrl": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_augmentationUrl')]"
+                    },
+                    "parserUrl": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_parserUrl')]"
+                    },
+                    "viLocation": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_viLocation')]"
+                    },
+                    "webappkey": {
+                        "value": "[parameters('workflows_indexerlogicapp5ee5u_parameters_webappkey')]"
+                    }
+                },
+                "state": "Enabled"
+            },
+            "scale": null,
+            "tags": {},
+            "type": "Microsoft.Logic/workflows"
+        }
+    ],
+    "variables": {}
+}
